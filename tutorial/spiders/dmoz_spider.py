@@ -1,6 +1,10 @@
 import scrapy
 
-class DmoxSpider(scrapy.Spider):
+import sys
+sys.path.append('/Users/matthewcaponigro/Documents/Analytics-Code/tutorial/tutorial') # this path address will need refactored if script is moved
+from items import DmozItem
+
+class DmozSpider(scrapy.Spider):
     name = "dmoz"
     allowed_domains = ["dmoz.org"]
     start_urls = [
@@ -10,8 +14,8 @@ class DmoxSpider(scrapy.Spider):
 
     def parse(self, response):
         filename = response.url.split("/")[-2] + '.html'
-        with open(filename, 'wb') as f:
-            f.write(response.body)
+##        with open(filename, 'wb') as f:
+##            f.write(response.body)
         for sel in response.xpath('//ul/li'):
             item = DmozItem()
             item['title'] = sel.xpath('a/text()').extract()
