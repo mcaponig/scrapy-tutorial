@@ -1,3 +1,12 @@
+'''dmoz_spider.py
+
+    Author: Matthew Caponigro
+    Based on Scrapy Tutorial
+    Language: Python 2.7
+    Last Edited: June 29, 2015
+
+'''
+
 import scrapy
 
 import sys
@@ -16,7 +25,7 @@ class DmozSpider(scrapy.Spider):
         filename = response.url.split("/")[-2] + '.html'
 ##        with open(filename, 'wb') as f:
 ##            f.write(response.body)
-        for sel in response.xpath('//ul/li'):
+        for sel in response.xpath('//ul[@class="directory-url"]/li'):
             item = DmozItem()
             item['title'] = sel.xpath('a/text()').extract()
             item['link'] = sel.xpath('a/@href').extract()
